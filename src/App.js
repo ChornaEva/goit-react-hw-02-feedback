@@ -1,5 +1,9 @@
 import "./App.css";
 import React, { Component } from "react";
+import Statistics from "./components/Statistics";
+import FeedbackOptions from "./components/FeedbackOptions";
+import Section from "./components/Section";
+import Notification from "./components/Notification";
 
 class App extends Component {
   state = {
@@ -8,38 +12,21 @@ class App extends Component {
     bad: 0,
   };
 
-  // создаем методы для отлова клика на кнопку и прибавляем к текущему кол-ву 1
-
-  onGoodClick = () => {
-    this.setState((prevstate) => {
+  // метод для оставления филбека по клику
+  onLeaveFeedback = (event) => {
+    this.setState((prevState) => {
       return {
-        good: prevstate.good + 1,
+        [event.target.textContent]: prevState[event.target.textContent] + 1,
       };
     });
   };
 
-  onNeutralClick = () => {
-    this.setState((prevstate) => {
-      return {
-        neutral: prevstate.neutral + 1,
-      };
-    });
-  };
-
-  onBadClick = () => {
-    this.setState((prevstate) => {
-      return {
-        bad: prevstate.bad + 1,
-      };
-    });
-  };
-
-  // создаю метод для суммарного подсчёта полож-х отзывов
+  // метод для суммарного подсчёта полож-х отзывов
   countTotalFeedback = ({ good, neutral, bad }) => {
     return good + neutral + bad;
   };
 
-  // создаю метод для подсчёта % полож-х отзывов
+  // метод для подсчёта % полож-х отзывов
   countPositiveFeedbackPercentage = ({ good, neutral, bad }) => {
     return Math.trunc((good * 100) / (good + neutral + bad));
   };
@@ -47,30 +34,29 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Please leave feedback</h1>
-        <div>
-          {/* передаем метод, который вызывается при клике */}
-          <button type="button" onClick={this.onGoodClick}>
-            Good
-          </button>
-          <button type="button" onClick={this.onNeutralClick}>
-            Neutral
-          </button>
-          <button type="button" onClick={this.onBadClick}>
-            Bad
-          </button>
-        </div>
-        <h1>Statistics</h1>
-        <ul>
-          <li>Good: {this.state.good}</li>
-          <li>Neutral: {this.state.neutral}</li>
-          <li>Bad: {this.state.bad}</li>
-          <li>Total: {this.countTotalFeedback(this.state)}</li>
-          <li>
-            Positive feedback:{" "}
-            {this.countPositiveFeedbackPercentage(this.state)}%
-          </li>
-        </ul>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={this.state}
+            onLeaveFeedback={this.onLeaveFeedback}
+          ></FeedbackOptions>
+        </Section>
+
+        <Section title="Statistics">
+          {this.countTotalFeedback(this.state) === 0 ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback(this.state)}
+              positivePercentage={this.countPositiveFeedbackPercentage(
+                this.state
+              )}
+            />
+          )}
+        </Section>
       </div>
     );
   }
@@ -78,25 +64,50 @@ class App extends Component {
 
 export default App;
 
-// onLeaveFeedback = (option) => {
-//   // console.log("ckick on me");
-//   // console.log(event.target);
-//   // console.log(option);
+// / создаем методы для отлова клика на кнопку и прибавляем к текущему кол-ву 1
 
-//   this.setState((prevState) => {
-//     // console.log(prevState);
+// onGoodClick = () => {
+//   this.setState((prevstate) => {
 //     return {
-//       [option.target.textContent]: prevState[option.target.textContent] + 1,
+//       good: prevstate.good + 1,
 //     };
 //   });
 // };
 
-// {Object.keys(this.state).map(key => (
-//   <button
-//     key={key}
-//     type="button"
-//     onClick={() => this.handleClick(key)}
-//   >
-//     {key}
-//   </button>
-// ))}
+// onNeutralClick = () => {
+//   this.setState((prevstate) => {
+//     return {
+//       neutral: prevstate.neutral + 1,
+//     };
+//   });
+// };
+
+// onBadClick = () => {
+//   this.setState((prevstate) => {
+//     return {
+//       bad: prevstate.bad + 1,
+//     };
+//   });
+// };
+
+// {/* <div>
+//           <button type="button" onClick={this.onGoodClick}>
+//             Good
+//           </button>
+//           <button type="button" onClick={this.onNeutralClick}>
+//             Neutral
+//           </button>
+//           <button type="button" onClick={this.onBadClick}>
+//             Bad
+//           </button>
+//         </div> */}
+// {/* <ul>
+//           <li>Good: {this.state.good}</li>
+//           <li>Neutral: {this.state.neutral}</li>
+//           <li>Bad: {this.state.bad}</li>
+//           <li>Total: {this.countTotalFeedback(this.state)}</li>
+//           <li>
+//             Positive feedback:
+//             {this.countPositiveFeedbackPercentage(this.state)}%
+//           </li>
+//         </ul> */}
