@@ -1,12 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { FeedbackSection, FeedbackSectionTitle } from "./Section.styled";
 
 const Section = ({ title, children }) => {
   return (
-    <section>
-      <h1>{title}</h1>
+    <FeedbackSection>
+      <FeedbackSectionTitle>{title}</FeedbackSectionTitle>
       {children}
-    </section>
+    </FeedbackSection>
   );
+};
+
+Section.propTypes = {
+  title: PropTypes.string,
 };
 
 export default Section;

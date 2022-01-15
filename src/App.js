@@ -12,7 +12,7 @@ class App extends Component {
     bad: 0,
   };
 
-  // метод для оставления филбека по клику
+  // метод для филбека по клику
   onLeaveFeedback = (event) => {
     this.setState((prevState) => {
       return {
@@ -21,7 +21,7 @@ class App extends Component {
     });
   };
 
-  // метод для суммарного подсчёта полож-х отзывов
+  // метод для подсчёта полож-х отзывов
   countTotalFeedback = ({ good, neutral, bad }) => {
     return good + neutral + bad;
   };
@@ -63,51 +63,3 @@ class App extends Component {
 }
 
 export default App;
-
-// / создаем методы для отлова клика на кнопку и прибавляем к текущему кол-ву 1
-
-// onGoodClick = () => {
-//   this.setState((prevstate) => {
-//     return {
-//       good: prevstate.good + 1,
-//     };
-//   });
-// };
-
-// onNeutralClick = () => {
-//   this.setState((prevstate) => {
-//     return {
-//       neutral: prevstate.neutral + 1,
-//     };
-//   });
-// };
-
-// onBadClick = () => {
-//   this.setState((prevstate) => {
-//     return {
-//       bad: prevstate.bad + 1,
-//     };
-//   });
-// };
-
-// {/* <div>
-//           <button type="button" onClick={this.onGoodClick}>
-//             Good
-//           </button>
-//           <button type="button" onClick={this.onNeutralClick}>
-//             Neutral
-//           </button>
-//           <button type="button" onClick={this.onBadClick}>
-//             Bad
-//           </button>
-//         </div> */}
-// {/* <ul>
-//           <li>Good: {this.state.good}</li>
-//           <li>Neutral: {this.state.neutral}</li>
-//           <li>Bad: {this.state.bad}</li>
-//           <li>Total: {this.countTotalFeedback(this.state)}</li>
-//           <li>
-//             Positive feedback:
-//             {this.countPositiveFeedbackPercentage(this.state)}%
-//           </li>
-//         </ul> */}
